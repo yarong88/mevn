@@ -1,0 +1,15 @@
+{
+  "name": "mevn",
+  "version": "1.0.0",
+  "description": "시작",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test2":"console.log('단축경로지정')"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fxjs": "^0.21.3"
+  }
+}
