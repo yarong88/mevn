@@ -1,0 +1,46 @@
+git log
+git log --online
+
+git status
+
+git add .
+git add -A(일반)
+
+git commit -m '커밋내용'
+git commit --amend
+
+git branch (삭제할땐 -D)
+//내(HEAD)가 어디있는지
+
+git checkout (HEAD~1 : HEAD에서 한칸 이동)
+//이동 (branch 이름 or 해시(8자리 필요))
+
+git remote
+//원격접속 목록
+
+git config user.email "이메일주소"
+git config user.name "닉네임"
+//접속
+
+git reset
+// 삭제 후 되돌림
+
+git merge
+// 병합
+
+git revert
+// 삭제하지만 내역을 가지고 되돌림
+
+git push --force
+// 강제로 push
+
+git init
+// 초기화 // or 폴더삭제 .git
+
+.gitignore
+
+git fetch
+// 업데이트 -> 최신 자료로
+git pull
+// 업그레이드 -> 당겨 내려받기
+git push
