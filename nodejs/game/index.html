@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const star_box = document.createElement('div')
+            document.body.append(star_box)
+            star_box.style.width = '500px'
+            star_box.style.height = '500px'            
+            star_box.style.position = 'absolute'
+            star_box.style.left = '200px'
+            star_box.style.top = '200px'
+            star_box.style.background = 'gray'
+
+            const star_candy = document.createElement('h1')
+            star_box.appendChild(star_candy)
+            star_candy.innerHTML = '★'
+            star_candy.style.position = 'absolute'
+            star_candy.style.color = 'yellow'
+
+            let [star_x, star_y] = [0, 0]
+
+            const block = 20
+            const print_star = () => {
+                star_x = Math.floor(Math.random()*20 + 1)
+                star_y = Math.floor(Math.random()*20 + 1)
+                star_candy.style.left = `${star_x*block}px`
+                star_candy.style.top = `${star_y*block}px`
+            }
+            print_star()
+
+            const star = document.createElement('h1')
+            star_box.appendChild(star)
+            star.style.position = 'absolute'
+
+            let state = true
+            setInterval(() => {
+                if (state) {            
+                    star.innerHTML = '<img src="./img/packman01.png" alt="#">'
+                } else {
+                    star.innerHTML = '<img src="./img/packman02.png" alt="#">'
+                }
+                state = !state
+            },300)
+            
+
+            let [x, y] = [1, 1]
+            const print = () => {
+                star.style.left = `${x * block}px`
+                star.style.top = `${y * block}px`
+            }
+
+            
+            const count_star = document.createElement('h1')
+            star_box.appendChild(count_star)
+            count_star.style.position = 'absolute'
+            count_star.style.left = `10px`
+            count_star.style.top = `500px`
+            let counting = 0
+
+            const keys = {ArrowLeft:37, ArrowUp:38, ArrowRight:39, ArrowDown: 40}
+            const {ArrowLeft:left, ArrowUp:up, ArrowRight:right, ArrowDown:down} = keys
+            let check = 0;
+            document.body.addEventListener('keydown', event => {
+                check = event.keyCode
+                
+                if (left === check) {
+                    x -= 1
+                    star.style.transform = 'scaleX(-1)'
+                }
+                if (up === check) {
+                    y -= 1
+                    star.style.transform = 'rotate(270deg)'
+                }
+                if (right === check) {
+                    x += 1
+                    star.style.transform = 'scaleX(1)'
+                }
+                if (down === check) {
+                    y += 1
+                    star.style.transform = 'rotate(90deg)'
+                }
+                if (x===0)x += 1
+                if (x===21)x -= 1
+                if (y===0)y += 1
+                if (y===21)y -= 1
+
+
+                if (Math.abs(x-star_x) < a && Math.abs(y-star_y) < b) {
+                    print_star()
+                    counting++                    
+                    star.style.scale = `${100+counting*20}%`                    
+                    count_star.innerHTML = `먹은 별사탕의 개수는 ${counting}개 입니다.`
+                    a=2+counting/4
+                    b=2+counting/4
+                }
+                print()
+            })
+                let a = 2
+                let b = 2
+            
+        })
+    </script>
+</head>
+<body>
+    <img src="./img/packman01.png" alt="#">
+</body>
+</html>
