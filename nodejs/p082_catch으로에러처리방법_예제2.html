@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const pm = new Promise((resolve, reject) => {
+            console.log('first Loading...')
+            let what = Math.random() < 0.5
+            setTimeout(() => {
+                if (what) {
+                    resolve('정상작동 완료')
+                } else {
+                    reject(new Error('문제 발생'))
+                }
+            }, 2000)
+        })
+        pm
+        .then(v=>console.log(v))
+        .catch(e=>console.log(e+', 통신을 종료하겠습니다.'))
+        .finally(()=>{console.log('통신 종료')})
+    </script>
+</body>
+
+</html>

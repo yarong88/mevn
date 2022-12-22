@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const face = Math.random<0.5
+        const watch = () => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => resolve('이상형 발견!😍😍'), 1000)
+            })
+        }
+        const talk = (num) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => resolve(num + '=> 연락처 좀 주실 수 있을까요?😅💦'), 1000)
+            })
+        }
+        const take = (seeu) => {
+            return new Promise((resolve, reject) => {
+                if (face) {
+                    setTimeout(() => resolve(seeu + '=>감사합니다. 연락 드리겠습니다!😆🕓'), 1000)
+                } else {
+                    setTimeout(() => reject(new Error(seeu + '=> 죄송합니다..😅')), 1000)
+                }
+            })
+        }
+        watch()
+            .then(talk)
+            .then(take)
+            .catch((me) => {
+                return me + '앗, 아니요, 저야말로..'
+            })
+            .then(console.log)
+            .catch(console.log)
+    </script>
+</body>
+
+</html>
