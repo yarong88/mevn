@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dollar_div = document.createElement('div')
+            const won_div = document.createElement('div')
+            const description_div = document.createElement('div')
+            const dollar_input = document.createElement('input')
+            const dollar_span = document.createElement('span')
+            const won_input = document.createElement('input')
+            const won_span = document.createElement('span')
+            const description_h3 = document.createElement('h3')
+            document.body.append(dollar_div, won_div, description_div)
+            dollar_div.append(dollar_input, dollar_span)
+            won_div.append(won_input, won_span)
+            description_div.append(description_h3)
+            dollar_span.textContent = '달러'
+            won_span.textContent = '원'
+
+            const url = 'https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRWUSD'
+            let ER
+            dollar_input.addEventListener('keyup', () => {
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        ER = data[0].basePrice
+                    })
+                description_h3.textContent = `현재 달러 환율은 달러 당 ${ER}원입니다.`
+                won_input.value = dollar_input.value * ER
+            })
+        })
+    </script>
+</body>
+
+</html>

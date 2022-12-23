@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promiseAll</title>
+</head>
+
+<body>
+    <script>
+        function test(text, time) {
+            return new Promise((resolved, rejected) => {
+                setTimeout(() => {
+                    typeof text === 'string'
+                        ? resolved('스트링입니다')
+                        : rejected('파악이 안됩니다.')
+                }, time)
+                console.log(text)
+            })
+        }
+
+        /* 일반비동기 */
+        const testgo = async () => {
+            console.time('일반비동기')
+            try {
+                await test('코딩', 3000)
+                await test('222', 2000)
+                await test(444, 1000)
+            }
+            catch (e) {
+                console.log(e)
+            }
+            console.timeEnd('일반비동기')
+        }
+        testgo()
+    </script>
+</body>
+
+</html>
