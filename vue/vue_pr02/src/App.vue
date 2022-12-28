@@ -1,60 +1,30 @@
 <template>
-  <div>
-    <div>구구단</div>
-    <div>
-      <input type="text" v-model="inData">
-      <button v-on:click="status=!status">ON/OFF</button>
-      <button v-on:click="add">ALL</button>
-    </div>
-    <div>
-      <table v-if="status">
-        <tr>
-          <th colspan="9">{{ inData+"단" }}</th>
-        </tr>
-        <tr>
-          <td v-for="data in arrData" :key="data">{{ inData+"X"+data+"="+inData*data }}</td>
-        </tr>
-      </table>
-      <table v-for="data_0 in arrData2" :key="data_0">
-        <tr>
-          <th colspan="9">{{ data_0+"단" }}</th>
-        </tr>
-        <tr>
-          <td v-for="data in arrData" :key="data">{{ data_0+"X"+data+"="+data_0*data }}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </nav>
+  <router-view/>
 </template>
 
-<script>
-export default {
-  name:"app",
-  data(){
-    return{
-      status : false,
-      inData : "1",
-      arrData: [1,2,3,4,5,6,7,8,9],
-      arrData2: [],
-    }
-  },
-  methods:{
-    add : function(){
-      this.arrData2=[2,3,4,5,6,7,8,9]
-    },
-  }
-}
-</script>
-
-<style>
-table th{
-  background-color: rgb(142, 229, 255);
-  height: 30px;
-}
-table td{
-  background-color: rgb(182, 238, 255);
-  height: 40px;
-  width: 70px;
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>

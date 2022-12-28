@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./p083/비트코인.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const trade_date = document.getElementById('trade-date')
+            const trade_time = document.getElementById('trade-time')
+            const trade_price = document.getElementById('trade-price')
+
+            const last_price = document.getElementById('last-price')
+            const now_price = document.getElementById('now-price')
+            const price_change = document.getElementById('price-change')
+
+            const hi_lo = document.getElementById('hi-lo')
+            const hi_price = document.getElementById('hi-price')
+            const lo_price = document.getElementById('lo-price')
+
+            const lastPrice = Number(localStorage.getItem('last price'))
+
+            bit_c().then(data => {
+                trade_date.textContent = '현재시각 : ' + data.trade_date + '/'
+                trade_time.textContent = data.trade_time
+                trade_price.textContent = '1coin : ' + data.trade_price.toLocaleString('ko-KR') + '원'
+                now_price.textContent = '현재 가격 : ' + data.trade_price.toLocaleString('ko-KR') + '원'
+                localStorage.setItem('last price', data.trade_price)
+
+                if (lastPrice !== 0) {
+                    if (data.trade_price > lastPrice) {
+                        price_change.textContent = `${((data.trade_price - lastPrice) / lastPrice * 100).toFixed(3)}% 상승🔺`
+                        price_change.style.color = 'red'
+                    }
+                    if (data.trade_price < lastPrice) {
+                        price_change.textContent = `${((lastPrice - data.trade_price) / lastPrice * 100).toFixed(3)}% 하락🔻`
+                        price_change.style.color = 'blue'
+                    }
+                    if (data.trade_price == lastPrice) {
+                        price_change.textContent = '동결◼'
+                    }
+                }
+
+                hi_lo.addEventListener('click', () => {
+                    hi_price.textContent = "최고가 : " + data.high_price.toLocaleString('ko-KR')
+                    hi_price.style.color = 'red'
+                    lo_price.textContent = "최저가 : " + data.low_price.toLocaleString('ko-KR')
+                    lo_price.style.color = 'blue'
+                })
+            })
+
+            last_price.textContent = '이전 가격 : ' + lastPrice.toLocaleString('ko-KR') + '원'
+        })
+    </script>
+</head>
+
+<body>
+    <div>
+        <h3>현재 비트코인 가격</h3>
+        <span id="trade-date"></span>
+        <span id="trade-time"></span>
+        <h3 id="trade-price"></h3>
+    </div>
+    <div>
+        <h3 id="last-price"></h3>
+        <h3 id="now-price"></h3>
+        <h4 id="price-change"></h4>
+    </div>
+    <div>
+        <button id="hi-lo">최고/최저가</button>
+        <br>
+        <span id="hi-price"></span>
+        <span id="lo-price"></span>
+    </div>
+</body>
+
+</html>
