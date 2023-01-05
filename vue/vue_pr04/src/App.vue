@@ -6,7 +6,8 @@
     <router-link to="/ex_1_2">예제01_2</router-link> |
     <router-link to="/ex_2">예제02</router-link> |
     <router-link to="/ex_3">예제03</router-link> |
-    <router-link to="/ex_4">예제04</router-link>
+    <router-link to="/ex_4">예제04</router-link> |
+    <router-link to="/ex_5">예제05</router-link>
   </nav>
   <router-view />
 </template>

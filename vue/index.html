@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="myform" action="/info" method="post">
+      <input type="text" name="iid" id="chat-id" />
+      <input type="password" name="ipw" id="chat-pw" />
+      <input id="id-send" type="submit" value="확인 전송" />
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        let socket = io()
+        const send_id = document.getElementById('id-send')
+        const chat_id = document.getElementById('chat-id')
+        send_id.addEventListener('click', () => {
+          localStorage.setItem('chat_id', chat_id.value)
+          e.preventDefault()
+          if (chat_id.value) {
+            socket.emit('chat id', chat_id.value)
+          }
+        })
+      })
+
+      // let message = document.getElementById('messages')
+      // let form = document.getElementById('form')
+      // let input = document.getElementById('input')
+
+      // form.addEventListener('submit', (e) => {})
+    </script>
+  </body>
+</html>

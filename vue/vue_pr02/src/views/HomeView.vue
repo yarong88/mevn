@@ -1,18 +1,36 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <textarea disabled v-model="textarea" id="message"></textarea>
+    <input
+      v-model="message"
+      autocomplete="off"
+      id="input"
+      @keyup.enter="sendMessage()"
+    />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'HomeView',
-  components: {
-    HelloWorld
-  }
+  created() {
+    this.$socket.on('chat massage', (data) => {
+      window.scrollTo(0, document.body.scrollHeight)
+      this.textarea = data + '\n'
+    })
+  },
+  data() {
+    return {
+      textarea: '',
+      message: ''
+    }
+  },
+  method: {
+    sendMessage() {
+      this.$socket.emit('chat massage', { message: this.message })
+      this.message = ''
+    }
+  },
+  components: {}
 }
 </script>

@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkchat"]=self["webpackChunkchat"]||[]).push([[443],{8924:function(t,a,e){e.r(a),e.d(a,{default:function(){return o}});e(7658);var n=e(3396),s=e(7139);const u={name:"about",setup(){},create(){this.$socket.on("chat",(t=>{console.log(t),this.chatData.push(t)}))},data(){return{chatData:[]}},methods:{}};var c=Object.assign(u,{setup(t){const a="이것은 setup으로 작성한 것임";return(t,e)=>((0,n.wg)(),(0,n.iD)("div",null,[(0,n._)("h1",null,(0,s.zw)(t.ydw),1),(0,n._)("h2",null,(0,s.zw)(a))]))}});const h=c;var o=h}}]);
+//# sourceMappingURL=about.f00fb81e.js.map

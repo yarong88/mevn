@@ -68,8 +68,19 @@
       let form = document.getElementById('form')
       let input = document.getElementById('input')
 
+      let chat_box = []
+      let chat_down = localStorage.getItem('chat_box')
+      chat_box = JSON.parse(chat_down)
+
+      for (let i = 0; i < chat_box.length; i++) {
+        let talk = document.createElement('li')
+        talk.textContent = chat_box[i]
+        message.appendChild(talk)
+      }
+
       form.addEventListener('submit', (e) => {
         e.preventDefault()
+        // submit은 다음 창으로 넘어가는데, 이를 방지하고 현재 창에 머물게 함
         if (input.value) {
           socket.emit('chat message', input.value)
           input.value = ''
@@ -77,6 +88,9 @@
       })
 
       socket.on('chat message', (msg) => {
+        chat_box.push(msg)
+        const chat_upload = JSON.stringify(chat_box)
+        localStorage.setItem('chat_box', chat_upload)
         let talk = document.createElement('li')
         talk.textContent = msg
         message.appendChild(talk) // 대화가 하나씩 생성

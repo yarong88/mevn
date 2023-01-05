@@ -11,6 +11,7 @@
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vue-socket.io": "^3.0.10",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
@@ -37,7 +38,7 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
-      "space-before-function-paren":"off",
+      "space-before-function-paren": "off",
       "vue/multi-word-component-names": "off"
     }
   },
