@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.2",
+    "cheerio": "^1.0.0-rc.12",
     "client": "^0.0.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "fast-xml-parser": "^4.0.13",
     "fxjs": "^0.21.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
