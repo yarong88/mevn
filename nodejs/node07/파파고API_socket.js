@@ -22,6 +22,7 @@ app.use(
 )
 
 let request = require('request')
+require('dotenv').config()
 
 io.on('connection', (socket) => {
   socket.on('translate', (msg) => {
