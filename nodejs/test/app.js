@@ -1,17 +1,16 @@
+require('dotenv').config()
 const { Server } = require('socket.io')
 const express = require('express')
 const path = require('path')
 const logger = require('morgan')
 const http = require('http')
 const app = express()
-const dotenv = require('dotenv')
-dotenv.config()
 
 const server = http.createServer(app)
 const io = new Server(server)
 
 const port = 3000
-const _path = path.join(__dirname, './')
+const _path = path.join(__dirname, './dist')
 console.log(_path)
 app.use('/', express.static(_path))
 app.use(logger('tiny'))
@@ -25,8 +24,6 @@ app.use(
 
 let client_id = process.env.papago_id
 let client_secret = process.env.papago_secret
-console.log(client_id)
-console.log(client_secret)
 let api_url = 'https://openapi.naver.com/v1/papago/n2mt'
 let request = require('request')
 

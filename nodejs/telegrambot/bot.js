@@ -7,6 +7,9 @@ const parser = new XMLParser()
 const token = process.env.botid
 
 const bot = new TelegramBot(token, { polling: true })
+
+const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
+
 let trans_status = false
 // 영번역 off 상태
 
@@ -36,7 +39,7 @@ bot.onText(/\/save (.+)/, (msg, match) => {
     url = ''
   }
 
-  const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
+  // const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
   const saveM = async () => {
     const _data = {
       key: command, //휘인
@@ -142,7 +145,6 @@ bot.on('message', (msg) => {
     }
     let words_loaded
     const findM = async (word) => {
-      const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
       const t = await chatBot
         .find({
           key: { $eq: word }
@@ -151,85 +153,83 @@ bot.on('message', (msg) => {
       // console.log(t)
       words_loaded = t[0]
     }
-    findM(keyword).then((keyword) => {
-      if ((keyword = words_loaded.key)) {
-        if (words_loaded.text) {
-          const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
-          const main = async () => {
-            const t = await chatBot
-              .updateMany(
-                {
-                  key: {
-                    $eq: keyword
+    findM(keyword).then(() => {
+      if (words_loaded) {
+        if ((keyword = words_loaded.key)) {
+          if (words_loaded.text) {
+            const main = async () => {
+              const t = await chatBot
+                .updateMany(
+                  {
+                    key: {
+                      $eq: keyword
+                    }
+                  },
+                  {
+                    $set: {
+                      text: text
+                    }
+                  },
+                  {
+                    upsert: true,
+                    multi: true,
+                    new: true
                   }
-                },
-                {
-                  $set: {
-                    text: text
-                  }
-                },
-                {
-                  upsert: true,
-                  multi: true,
-                  new: true
-                }
-              )
-              .lean()
+                )
+                .lean()
+            }
+            main()
           }
-          main()
-        }
-        if (words_loaded.url) {
-          const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
-          const main = async () => {
-            const t = await chatBot
-              .updateMany(
-                {
-                  key: {
-                    $eq: keyword
+          if (words_loaded.url) {
+            const main = async () => {
+              const t = await chatBot
+                .updateMany(
+                  {
+                    key: {
+                      $eq: keyword
+                    }
+                  },
+                  {
+                    $set: {
+                      url: url
+                    }
+                  },
+                  {
+                    upsert: true,
+                    multi: true,
+                    new: true
                   }
-                },
-                {
-                  $set: {
-                    url: url
-                  }
-                },
-                {
-                  upsert: true,
-                  multi: true,
-                  new: true
-                }
-              )
-              .lean()
+                )
+                .lean()
+            }
+            main()
           }
-          main()
-        }
-        if (words_loaded.imageId) {
-          const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
-          const main = async () => {
-            const t = await chatBot
-              .updateMany(
-                {
-                  key: {
-                    $eq: keyword
+          if (words_loaded.imageId) {
+            const main = async () => {
+              const t = await chatBot
+                .updateMany(
+                  {
+                    key: {
+                      $eq: keyword
+                    }
+                  },
+                  {
+                    $set: {
+                      imageId: imageId
+                    }
+                  },
+                  {
+                    upsert: true,
+                    multi: true,
+                    new: true
                   }
-                },
-                {
-                  $set: {
-                    imageId: imageId
-                  }
-                },
-                {
-                  upsert: true,
-                  multi: true,
-                  new: true
-                }
-              )
-              .lean()
+                )
+                .lean()
+            }
+            main()
           }
-          main()
         }
       } else {
-        const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
         const saveM = async () => {
           const _data = {
             key: keyword,
@@ -237,10 +237,8 @@ bot.on('message', (msg) => {
             url: url,
             imageId: imageId
           }
-          // console.log(_data)
           const new_chatBot = new chatBot(_data)
           const t = await new_chatBot.save()
-          console.log(t)
         }
         saveM()
       }
@@ -250,7 +248,7 @@ bot.on('message', (msg) => {
 
   //                                                     @@ DB에서 불러오기 시작 @@
   const findM = async (command) => {
-    const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
+    // const { mongoose, chatBot } = require('./DB_CRUD_chatBot.js')
     const t = await chatBot
       .find({
         key: { $eq: command }
@@ -402,8 +400,40 @@ bot.on('message', (msg) => {
       bot.sendMessage(chatId, `${stock_record_price}`)
     }
     main()
-    //                                        @@ 삼성전자 주식 데이터 불러오기 끝 @@
   }
+  //                                        @@ 삼성전자 주식 데이터 불러오기 끝 @@
+
+  //                                                @@ 영화 순위 불러오기 시작 @@
+  if (msg.text == '영화순위') {
+    const axios = require('axios') //리퀘스트용도로 사용
+    const cheerio = require('cheerio') //선택자로 필요한 정보만 추출
+
+    const url = 'https://movie.naver.com/movie/sdb/rank/rmovie.naver'
+
+    let movie = []
+
+    axios.get(url).then((res) => {
+      let $ = cheerio.load(res.data)
+
+      $('.tit3 > a').each(function () {
+        movie.push($(this).text())
+      })
+
+      let movies = ''
+
+      movie.forEach((v, i) => {
+        if (i < 10) {
+          movies += `${i + 1}위:${v}\n`
+        }
+      })
+
+      let today = new Date()
+      const date = today.toLocaleDateString('ko-kr')
+
+      bot.sendMessage(chatId, `${date} 영화순위 \n${movies}`)
+    })
+  }
+  //                                                  @@ 영화 순위 불러오기 끝 @@
 })
 //                                                                   @@ bot.on @@
 
