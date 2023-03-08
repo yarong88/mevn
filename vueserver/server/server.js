@@ -73,27 +73,6 @@ app.post('/dbu', (req, res) => {
     console.log(t)
     res.send('수정완료')
   })()
-  // const main = async () => {
-  //   const t = await Photo.updateMany(
-  //     {
-  //       title: {
-  //         $eq: '큰돌'
-  //       }
-  //     },
-  //     {
-  //       $set: {
-  //         url: 'yjkko48@kakao.com'
-  //       }
-  //     },
-  //     {
-  //       upsert: true,
-  //       multi: true,
-  //       new: true
-  //     }
-  //   ).lean()
-  //   console.log(t)
-  // }
-  // main()
 })
 // Delete
 app.get('/dbd/:date', (req, res) => {

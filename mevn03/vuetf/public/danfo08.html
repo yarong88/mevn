@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TensorFlowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+  </head>
+  <body>
+    <div id="s_table"></div>
+    <div id="s_line"></div>
+    <div id="s_table"></div>
+    <div id="s_line"></div>
+    <script>
+      const s = new dfd.Series([20, 21, 22, 23])
+      s.print()
+      s.describe().print()
+      s.plot('s_table').table()
+      s.plot('s_line').line()
+
+      const d1 = new dfd.DataFrame([
+        { 온도: 20, 요일: '월', 판매량: 40 },
+        { 온도: 21, 요일: '화', 판매량: 45 },
+        { 온도: 22, 요일: '수', 판매량: 50 },
+        { 온도: 23, 요일: '목', 판매량: 55 }
+      ])
+      d1.print()
+      // 배열 방식
+
+      const d2 = new dfd.DataFrame({
+        온도: [20, 21, 22, 23],
+        요일: ['월', '화', '수', '목'],
+        판매량: [40, 45, 50, 55]
+      })
+      d2.print()
+      // 객체 방식
+    </script>
+  </body>
+</html>
